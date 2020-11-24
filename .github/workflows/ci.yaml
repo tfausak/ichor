@@ -4,8 +4,10 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ ubuntu-18.04 ]
-        ghc: [ 8.10.2 ]
+        os:
+          - ubuntu-18.04
+        ghc:
+          - 8.10.2
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
