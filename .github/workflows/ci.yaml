@@ -24,10 +24,13 @@ jobs:
           path: |
             ${{ github.workspace }}/.cabal
             dist-newstyle
-          key: a-${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-${{ hashFiles('cabal.project.freeze') }}
+            ghc-cache
+          key: b-${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-${{ hashFiles('cabal.project.freeze') }}
           restore-keys: |
-            a-${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-
-            a-${{ matrix.os }}-${{ matrix.ghc }}-
-      - run: for f in $( find dist-newstyle -name '*.hi' ); do echo $f; ghc --show-iface $f; done
+            b-${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-
+            b-${{ matrix.os }}-${{ matrix.ghc }}-
+      - run: mkdir -p ghc-cache
+      - run: for f in $( find ghc-cache -name '*.hi' ); do echo $f; ghc --show-iface $f; done
       - run: cabal build --ghc-options=-v --verbose=3
-      - run: for f in $( find dist-newstyle -name '*.hi' ); do echo $f; ghc --show-iface $f; done
+      - run: cabal exec -- ghc --make Ichor -hidir ghc-cache -odir ghc-cache
+      - run: for f in $( find ghc-cache -name '*.hi' ); do echo $f; ghc --show-iface $f; done
