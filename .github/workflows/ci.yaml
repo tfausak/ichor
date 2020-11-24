@@ -32,5 +32,5 @@ jobs:
       - run: mkdir -p ghc-cache
       - run: for f in $( find ghc-cache -name '*.hi' ); do echo $f; ghc --show-iface $f; done
       - run: cabal build --ghc-options=-v --verbose=3
-      - run: cabal exec -- ghc --make Ichor -hidir ghc-cache -odir ghc-cache
+      - run: cabal exec -- ghc --make Ichor -hidir ghc-cache -odir ghc-cache -v
       - run: for f in $( find ghc-cache -name '*.hi' ); do echo $f; ghc --show-iface $f; done
