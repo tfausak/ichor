@@ -13,7 +13,9 @@ jobs:
     steps:
       - run: env
       - uses: actions/checkout@v2
+      - run: for f in $( git ls-files ); do ls -l $f; done
       - run: for f in $( git ls-files ); do echo $f; touch -t 200102030405.06 $f; done
+      - run: for f in $( git ls-files ); do ls -l $f; done
       - id: setup-haskell
         uses: actions/setup-haskell@v1
         with:
