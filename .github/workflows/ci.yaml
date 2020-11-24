@@ -14,7 +14,7 @@ jobs:
       - run: env
       - uses: actions/checkout@v2
       - run: for f in $( git ls-files ); do ls -l $f; done
-      - run: for f in $( git ls-files ); do echo $f; touch -t 197001010000.00 $f; done
+      - run: for f in $( git ls-files ); do echo $f; touch -t 207001010000.00 $f; done
       - run: for f in $( git ls-files ); do ls -l $f; done
       - id: setup-haskell
         uses: actions/setup-haskell@v1
@@ -34,7 +34,7 @@ jobs:
             d-${{ matrix.os }}-${{ matrix.ghc }}-
       - run: mkdir -p ghc-cache
       - run: for f in $( find ghc-cache -name '*.hi' ); do echo $f; ghc --show-iface $f; done
-      - run: for f in $( find ghc-cache -type f ); do ls -l $f; md5sum $f; touch -t 197001010000.00 $f; done
+      - run: for f in $( find ghc-cache -type f ); do ls -l $f; md5sum $f; touch -t 207001010000.00 $f; done
       - run: cabal build --ghc-options=-v --verbose=3
       - run: cabal exec -- ghc --make Ichor -hidir ghc-cache -odir ghc-cache -v -ddump-hi-diffs
       - run: for f in $( find ghc-cache -name '*.hi' ); do echo $f; ghc --show-iface $f; done
