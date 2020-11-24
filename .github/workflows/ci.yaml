@@ -31,6 +31,8 @@ jobs:
             b-${{ matrix.os }}-${{ matrix.ghc }}-
       - run: mkdir -p ghc-cache
       - run: for f in $( find ghc-cache -name '*.hi' ); do echo $f; ghc --show-iface $f; done
+      - run: for f in $( find ghc-cache ); do md5sum $f; done
       - run: cabal build --ghc-options=-v --verbose=3
-      - run: cabal exec -- ghc --make Ichor -hidir ghc-cache -odir ghc-cache -v
+      - run: cabal exec -- ghc --make Ichor -hidir ghc-cache -odir ghc-cache -v -ddump-hi-diffs
       - run: for f in $( find ghc-cache -name '*.hi' ); do echo $f; ghc --show-iface $f; done
+      - run: for f in $( find ghc-cache ); do md5sum $f; done
