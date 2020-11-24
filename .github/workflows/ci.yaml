@@ -18,7 +18,7 @@ jobs:
         with:
           ghc-version: ${{ matrix.ghc }}
           cabal-version: ${{ matrix.cabal }}
-      - run: cabal --builddir=cabal-stuff/build freeze
+      - run: cabal --builddir=cabal-stuff/build --verbose=3 freeze
       - uses: actions/cache@v2
         with:
           path: cabal-stuff
@@ -26,4 +26,4 @@ jobs:
           restore-keys: |
             ${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-
             ${{ matrix.os }}-${{ matrix.ghc }}-
-      - run: cabal --builddir=cabal-stuff/build build
+      - run: cabal --builddir=cabal-stuff/build --verbose=3 build
