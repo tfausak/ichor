@@ -28,4 +28,6 @@ jobs:
           restore-keys: |
             a-${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-
             a-${{ matrix.os }}-${{ matrix.ghc }}-
+      - run: for f in $( find dist-newstyle -name '*.hi' ); do echo $f; ghc --show-iface $f; done
       - run: cabal build --ghc-options=-v --verbose=3
+      - run: for f in $( find dist-newstyle -name '*.hi' ); do echo $f; ghc --show-iface $f; done
