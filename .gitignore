@@ -1,2 +1,3 @@
-/cabal-stuff/
+/.cabal/
 /cabal.project.freeze
+/dist-newstyle/

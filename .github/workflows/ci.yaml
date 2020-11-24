@@ -1,7 +1,7 @@
 name: CI
 on: push
 env:
-  CABAL_DIR: ${{ github.workspace }}/cabal-stuff/root
+  CABAL_DIR: ${{ github.workspace }}/.cabal
 jobs:
   build:
     strategy:
@@ -18,12 +18,14 @@ jobs:
         with:
           ghc-version: ${{ matrix.ghc }}
           cabal-version: ${{ matrix.cabal }}
-      - run: cabal --builddir=cabal-stuff/build --verbose=3 freeze
+      - run: cabal freeze --verbose=3
       - uses: actions/cache@v2
         with:
-          path: cabal-stuff
-          key: ${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-${{ hashFiles('cabal.project.freeze') }}
+          path: |
+            ${{ github.workspace }}/.cabal
+            dist-newstyle
+          key: a-${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-${{ hashFiles('cabal.project.freeze') }}
           restore-keys: |
-            ${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-
-            ${{ matrix.os }}-${{ matrix.ghc }}-
-      - run: cabal --builddir=cabal-stuff/build --verbose=3 build
+            a-${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-
+            a-${{ matrix.os }}-${{ matrix.ghc }}-
+      - run: cabal build --ghc-options=-v --verbose=3
