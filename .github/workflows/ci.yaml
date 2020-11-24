@@ -13,6 +13,7 @@ jobs:
     steps:
       - run: env
       - uses: actions/checkout@v2
+      - run: for f in $( git ls-files ); do echo $f; touch -t 200102030405.06 $f; done
       - id: setup-haskell
         uses: actions/setup-haskell@v1
         with:
@@ -25,10 +26,10 @@ jobs:
             ${{ github.workspace }}/.cabal
             dist-newstyle
             ghc-cache
-          key: b-${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-${{ hashFiles('cabal.project.freeze') }}
+          key: c-${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-${{ hashFiles('cabal.project.freeze') }}
           restore-keys: |
-            b-${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-
-            b-${{ matrix.os }}-${{ matrix.ghc }}-
+            c-${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-
+            c-${{ matrix.os }}-${{ matrix.ghc }}-
       - run: mkdir -p ghc-cache
       - run: for f in $( find ghc-cache -name '*.hi' ); do echo $f; ghc --show-iface $f; done
       - run: for f in $( find ghc-cache -type f ); do md5sum $f; done
