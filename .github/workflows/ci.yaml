@@ -1,0 +1,29 @@
+name: CI
+on: push
+env:
+  CABAL_DIR: ${{ github.workspace }}/cabal-stuff/root
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ ubuntu-18.04 ]
+        ghc: [ 8.10.2 ]
+        cabal: [ 3.2.0.0 ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - run: env
+      - uses: actions/checkout@v2
+      - id: setup-haskell
+        uses: actions/setup-haskell@v1
+        with:
+          ghc-version: ${{ matrix.ghc }}
+          cabal-version: ${{ matrix.cabal }}
+      - run: cabal --builddir=cabal-stuff/build freeze
+      - uses: actions/cache@v2
+        with:
+          path: cabal-stuff
+          key: ${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-${{ hashFiles('cabal.project.freeze') }}
+          restore-keys: |
+            ${{ matrix.os }}-${{ matrix.ghc }}-${{ matrix.cabal }}-
+            ${{ matrix.os }}-${{ matrix.ghc }}-
+      - run: cabal --builddir=cabal-stuff/build build
