@@ -5,13 +5,12 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - id: setup-haskell
-        uses: actions/setup-haskell@v1
+      - uses: actions/setup-haskell@v1
         with:
           ghc-version: 8.8.4
-          stack-version: 2.5.1
       - uses: actions/cache@v2
         with:
           path: .shake
           key: 2020-12-05-a
-      - run: stack Shakefile.hs
+      - run: curl --location https://github.com/ndmitchell/shake/releases/download/v0.19.2/shake-0.19.2-x86_64-linux.tar.gz | gunzip | tar --extract --strip-components 1 --wildcards '*/shake'
+      - run: ./shake Shakefile.hs
