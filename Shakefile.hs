@@ -1,6 +1,6 @@
 #! /usr/bin/env cabal
 {- cabal:
-build-depends: base, shake
+build-depends: base == 4.14.1.0, shake == 0.19.2
 -}
 
 -- | <https://shakebuild.com>
