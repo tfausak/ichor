@@ -17,4 +17,4 @@ jobs:
             .shake
           key: 2020-12-05-b
       - run: cabal build
-      - run: cabal exec shake
+      - run: cabal exec runghc Shakefile.hs
