@@ -1,3 +1,3 @@
 module Ichor where
 import Ichor.Extra
-main = print $ number + 1
+main = print $ number + 2
