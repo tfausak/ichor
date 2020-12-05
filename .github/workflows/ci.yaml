@@ -17,6 +17,10 @@ jobs:
           ghc-version: ${{ matrix.ghc }}
       - uses: actions/cache@v2
         with:
-          path: ghc-cache
+          path: |
+            ${{ github.workspace }}/.cabal
+            dist-newstyle
+            .shake
           key: ${{ matrix.os }}-${{ matrix.ghc }}
-      - run: ghc Ichor.hs -hidir ghc-cache -odir ghc-cache -v -ddump-hi-diffs
+      - run: cabal build shake-0.19.2
+      - run: cabal exec shake
