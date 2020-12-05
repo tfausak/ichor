@@ -2,25 +2,16 @@ name: CI
 on: push
 jobs:
   build:
-    strategy:
-      matrix:
-        os:
-          - ubuntu-18.04
-        ghc:
-          - 8.10.2
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
       - id: setup-haskell
         uses: actions/setup-haskell@v1
         with:
-          ghc-version: ${{ matrix.ghc }}
+          ghc-version: 8.10.2
+          stack-version: 2.5.1
       - uses: actions/cache@v2
         with:
-          path: |
-            ${{ github.workspace }}/.cabal
-            dist-newstyle
-            .shake
-          key: ${{ matrix.os }}-${{ matrix.ghc }}
-      - run: cabal build shake-0.19.2
-      - run: cabal exec shake
+          path: .shake
+          key: 2020-12-05-a
+      - run: stack Shakefile.hs
