@@ -13,8 +13,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: |
-            ${{ github.workspace }}/.cabal
+            ${{ steps.setup-haskell.outputs.cabal-store }}
             .shake
-          key: 2020-12-05-b
-      - run: cabal build
-      - run: cabal exec runghc Shakefile.hs
+          key: 2020-12-05-c
+      - run: ./Shakefile.hs

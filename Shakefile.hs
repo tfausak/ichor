@@ -1,5 +1,7 @@
-#! /usr/bin/env stack
--- stack --resolver lts-16.24 script
+#! /usr/bin/env cabal
+{- cabal:
+build-depends: base, shake
+-}
 
 -- | <https://shakebuild.com>
 -- <https://stackoverflow.com/a/50724825/1274282>
